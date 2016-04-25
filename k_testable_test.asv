@@ -1,0 +1,46 @@
+% k = 20 machine
+
+
+% alphabet = {['0'], ['1']};
+% I = {['0110101100110101110'], ['1001010011001010001']};
+% F = {['1100110011001100110'], ['0110011001100110011']};
+% C = {['1111101'], ['11111111110011']};
+% T = {['01111001011101001001'], ['00001110001110001110'], ['00011100011100011100'], ['00001111000011110000']};
+% kset = {alphabet, I, C, F, T};
+% 
+% dfa = K2dfa(kset);
+   for k = 2:10 
+     clear;
+     clc;
+
+     kset = KBuilder('D:\MATLAB GI ToolBox Beta 1.1\traink.txt', k);
+     dfa = K2dfa(kset);
+
+   
+    % parse the test file in order to output the result of testing
+    fo = fopen('out.txt', 'w+');
+    fi = fopen('negative.txt', 'r');
+
+    startindex = 0;
+    % ignore the first line
+    str = fgetl(fi);
+    pos = 0;
+    neg = 0;
+    while ~feof(fi)
+
+        teststr = fgetl(fi);
+        % if a string is accepted, then output 1 else 0
+        if ~IsStringAccepted(teststr, dfa)
+        	fprintf(fo, '0');
+        	fprintf(fo, '\n');
+            neg = neg + 1;            
+        else 
+            fprintf(fo, '1');
+            fprintf(fo, '\n');
+            pos = pos + 1;
+        end
+    	startindex = 0;
+    end
+    fclose(fi);
+    fclose(fo);
+   end

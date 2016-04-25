@@ -1,0 +1,32 @@
+k: 2
+time: 30.87
+false pos: 0
+true neg: 1000
+true pos: 580
+false neg: 420
+precision: 1
+recall: 0.58
+k: 3
+time: 32.4
+false pos: 0
+true neg: 1000
+true pos: 579
+false neg: 421
+precision: 1
+recall: 0.579
+k: 5
+time: 33.81
+false pos: 0
+true neg: 1000
+true pos: 142
+false neg: 858
+precision: 1
+recall: 0.142
+k: 10
+time: 89.54
+false pos: 0
+true neg: 1000
+true pos: 0
+false neg: 1000
+precision: NaN
+recall: 0
