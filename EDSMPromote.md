@@ -1,0 +1,1 @@
+_The same as RPNI Promote method. Please see [RPNI\_Promote](RPNIPromote.md) for detail._

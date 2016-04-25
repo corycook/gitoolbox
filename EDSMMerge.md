@@ -1,0 +1,1 @@
+_The same as RPNI Merge method. Please see [RPNI\_Merge](RPNIMerge.md) for detail._

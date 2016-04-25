@@ -1,0 +1,1 @@
+_The same as RPNI Fold method. Please see [RPNI\_Fold](RPNIFold.md) for detail._
