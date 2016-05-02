@@ -2,7 +2,7 @@
 % [Institute]: Munich University of Technology
 % [Web]: http://code.google.com/p/gitoolbox/
 % [Emails]: hasan.akram@sec.in.tum.de, huang.xiao@mytum.de
-% Copyright © 2010
+% Copyright ? 2010
 % 
 % ****** This is a beta version ******
 % [DISCLAIMER OF WARRANTY]
@@ -24,30 +24,29 @@
 % [Description]
 % Here defines the data structure of Deterministic Frequency Finite Automaton (DFFA).
 
-classdef DFFA
-    % Here defines the data structure of DFFA
+classdef DFFA < DFA
     properties
-        FiniteSetOfStates   % FiniteSetOfStates is the set of finite states denoted as Q
-        Alphabets   % The set of alphabets
-        InitialStateFrequency  % The frequency set of initia states
+        InitialStateFrequency  % The frequency set of initial states
         FinalStateFrequency   % The frequency set of final states
         FrequencyTransitionMatrix   % The transition matrix of frequency
-        AssociateTransitionMatrix  % The associate transition matrix 
-        RED  % The set of Red states
-        BLUE  % The set of Blue states
+        AssociateTransitionMatrix  % The associate transition matrix
     end
     
     methods
-        % Constructor
         function obj = DFFA(q, a, ifr, ffr, ftm, atm, red, blue)
-            obj.FiniteSetOfStates = q;
-            obj.Alphabets = a;
+            obj = obj@DFA(q,a,atm,find(ifr),ffr > 0,[],red,blue);
             obj.InitialStateFrequency = ifr;
             obj.FinalStateFrequency = ffr;
             obj.FrequencyTransitionMatrix = ftm;
-            obj.AssociateTransitionMatrix= atm;
-            obj.RED = red;
-            obj.BLUE = blue;
+            obj.AssociateTransitionMatrix = atm;
+        end
+        function obj = set.FinalStateFrequency(obj, value)
+            obj.FinalStateFrequency = value;
+            obj.FinalAcceptStates = find(value);
+        end
+        function obj = set.AssociateTransitionMatrix(obj, value)
+            obj.AssociateTransitionMatrix = value;
+            obj.TransitionMatrix = value;
         end
     end
 end

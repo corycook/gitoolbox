@@ -2,7 +2,7 @@
 % [Institute]: Munich University of Technology
 % [Web]: http://code.google.com/p/gitoolbox/
 % [Emails]: hasan.akram@sec.in.tum.de, huang.xiao@mytum.de
-% Copyright © 2010
+% Copyright ? 2010
 % 
 % ****** This is a beta version ******
 % [DISCLAIMER OF WARRANTY]
@@ -24,30 +24,27 @@
 % [Description]
 % Here defines the data structure of Deterministic Probability Finite Automaton (DPFA).
 
-classdef DPFA
-    % Here defines the data structure of DFFA
+classdef DPFA < DFA
     properties
-        FiniteSetOfStates   % FiniteSetOfStates is the set of finite states denoted as Q
-        Alphabets   % The set of alphabets
-        InitialState  % The initial state
         FinalStateProbability   % The probability set of final states
         ProbabilityTransitionMatrix   % The transition matrix of probability
-        AssociateTransitionMatrix  % The associate transition matrix 
-        RED  % The set of Red states
-        BLUE  % The set of Blue states
+        AssociateTransitionMatrix  % The associate transition matrix
     end
     
     methods
-        % Constructor
         function obj = DPFA(q, a, i, fsp, ptm, atm, red, blue)
-            obj.FiniteSetOfStates = q;
-            obj.Alphabets = a;
-            obj.InitialState = i;
+            obj = obj@DFA(q,a,atm,i,fsp>0,[],red,blue);
             obj.FinalStateProbability = fsp;
             obj.ProbabilityTransitionMatrix = ptm;
-            obj.AssociateTransitionMatrix= atm;
-            obj.RED = red;
-            obj.BLUE = blue;
+            obj.AssociateTransitionMatrix = atm;
+        end
+        function obj = set.FinalStateProbability(obj, value)
+            obj.FinalStateProbability = value;
+            obj.FinalAcceptStates = find(value);
+        end
+        function obj = set.AssociateTransitionMatrix(obj, value)
+            obj.AssociateTransitionMatrix = value;
+            obj.TransitionMatrix = value;
         end
     end
 end

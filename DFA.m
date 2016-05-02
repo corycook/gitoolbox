@@ -47,10 +47,45 @@ classdef DFA
             obj.TransitionMatrix = tm;
             obj.InitialState = i;
             obj.FinalAcceptStates = fa;
-            obj.FinalRejectStates = fr;  
+            obj.FinalRejectStates = fr;
             obj.RED = red;
             obj.BLUE = blue;
        end
-    end
-end
+       function [G, labels] = createDigraph(obj)
+           [from, to, labels] = obj.createAdjacencyMatrix();
+           G = digraph(from, to);
+       end
+       function [from, to, labels] = createAdjacencyMatrix(obj)
+           alphabet = obj.Alphabets;
+           transition = obj.TransitionMatrix;
+           nsymbol = length(obj.Alphabets);
+           initial = obj.InitialState;
+           states = initial;
+           queue = initial;
+           from = [];
+           to = [];
+           labels = {};
+           
+           while ~isempty(queue)
+               item = queue(1);
+               queue(1) = []; %unshift
+               from_state = find(states == item);
+               for i = 1:nsymbol
+                   next_state = transition(item, i);
+                   to_state = find(states == next_state);
+                   if next_state > 0 && isempty(to_state)
+                       queue(end + 1) = next_state;
+                       states(end + 1) = next_state;
+                       to_state = length(states);
+                   end
+                   if next_state > 0 && ~any((to == to_state) & (from == from_state))
+                       from(end + 1) = from_state;
+                       to(end + 1) = to_state;
+                       labels{end + 1} = alphabet{i};
+                   end %if
+               end %for
+           end %while
+       end % createAdjacencyMatrix
+    end % methods
+end % DFA
 
